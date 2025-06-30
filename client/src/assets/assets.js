@@ -11,6 +11,9 @@ import room1Image from './delux.jpg';
 import room2Image from './acroom.jpg';
 import room3Image from './dormitory.jpg';
 import room4Image from './guest.jpg';
+import location from './location.png';
+import regImg from './regimg.jpg';
+import logo from './logo.jpg'
 
 import {
   FaWifi,
@@ -48,6 +51,9 @@ export const images = {
   person_icon,
   lock_icon,
   mail_icon,
+  location,
+  regImg,
+  logo,
 };
 
 export const features = [
@@ -134,6 +140,8 @@ export const roomAmenityIcons = {
   "Clean Linens": FaBed,
   "AC": FaFan,
 };
+
+
 export const rooms = [
   {
     _id: "room1",
@@ -142,10 +150,15 @@ export const rooms = [
       "Our Deluxe Room is designed to provide comfort and relaxation, featuring a spacious layout ideal for families. Enjoy a well-furnished interior with an attached private bathroom, modern fixtures, and elegant decor. Whether you're staying for a short trip or an extended vacation, this room provides the perfect balance of luxury and homely comfort.",
     price: 1500,
     capacity: 3,
+    totalBookings: 12,
     images: [room1Image, room2Image, room3Image],
     rating: 4.5,
     hostedBy: "Jay Patel",
     contactNumber: "9876543210",
+    address: "Shree Nagar Society, Navsari, Gujarat",
+    checkInDate: "2025-07-01",
+    checkOutDate: "2025-07-03",
+    isPaid: false,
     amenities: ["Attached Bathroom", "Fan", "Wi-Fi", "24x7 Water"],
   },
   {
@@ -155,10 +168,15 @@ export const rooms = [
       "The Air-Conditioned Room offers a refreshing escape from the heat, making it a perfect choice for travelers looking for comfort and tranquility. Equipped with a split AC, flat-screen TV, and high-speed Wi-Fi, this room ensures you stay connected and relaxed. Suitable for couples or solo guests seeking a premium experience without compromise.",
     price: 2000,
     capacity: 2,
+    totalBookings: 20,
     images: [room2Image, room1Image, room4Image],
     rating: 4.8,
     hostedBy: "Kiran Shah",
     contactNumber: "9765432180",
+    address: "Sunrise Avenue, Surat, Gujarat",
+    checkInDate: "2025-07-05",
+    checkOutDate: "2025-07-08",
+    isPaid: true,
     amenities: ["AC", "Wi-Fi", "TV", "Hot Water"],
   },
   {
@@ -168,10 +186,15 @@ export const rooms = [
       "The Dormitory is a cost-effective and social accommodation option, best suited for students, group travelers, or pilgrims. With comfortable bunk beds, shared bathroom facilities, and secure storage lockers, it offers a safe and friendly environment for budget-conscious guests. Designed to accommodate up to 8 people, this space fosters a community-like experience.",
     price: 500,
     capacity: 8,
+    totalBookings: 8,
     images: [room3Image, room4Image, room1Image],
     rating: 4.2,
     hostedBy: "Ramesh Bhatt",
     contactNumber: "9988776655",
+    address: "Opp. Temple Gate, Anand, Gujarat",
+    checkInDate: "2025-07-10",
+    checkOutDate: "2025-07-12",
+    isPaid: false,
     amenities: ["Shared Bathroom", "Fans", "Drinking Water", "Lockers"],
   },
   {
@@ -181,13 +204,52 @@ export const rooms = [
       "Our Guest Room offers a serene atmosphere ideal for visiting priests, elders, or special guests. With a focus on cleanliness, comfort, and simplicity, it includes all essential amenities such as fresh linens, drinking water, and a well-ventilated layout. This room is designed to provide peace and privacy for a restful stay.",
     price: 1200,
     capacity: 2,
+    totalBookings: 15,
     images: [room4Image, room1Image, room2Image],
     rating: 4.3,
     hostedBy: "Meera Joshi",
     contactNumber: "9123456789",
+    address: "Behind Community Hall, Rajkot, Gujarat",
+    checkInDate: "2025-07-15",
+    checkOutDate: "2025-07-17",
+    isPaid: true,
     amenities: ["Bed", "Fan", "Water", "Clean Linens"],
   },
 ];
 
 
 
+
+
+
+
+// Utility to calculate summary
+const totalBookings = rooms.reduce((acc, room) => acc + room.totalBookings, 0);
+const totalRevenue = rooms.reduce((acc, room) => acc + room.totalBookings * room.price, 0);
+
+// Dummy recent booking list (you can replace with real bookings)
+export const recentBookings = [
+  {
+    user: { username: "Amit Shah" },
+    room: { roomType: "Deluxe Room" },
+    totalPrice: 4500,
+    isPaid: true,
+  },
+  {
+    user: { username: "Neha Patel" },
+    room: { roomType: "Dormitory" },
+    totalPrice: 1000,
+    isPaid: false,
+  },
+  {
+    user: { username: "Ravi Desai" },
+    room: { roomType: "AC Room" },
+    totalPrice: 6000,
+    isPaid: true,
+  },
+];
+
+export const dashboardSummary = {
+  totalBookings,
+  totalRevenue,
+};

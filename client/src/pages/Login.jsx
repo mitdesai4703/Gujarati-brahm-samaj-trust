@@ -41,8 +41,15 @@ function Login() {
         if (data.success) {
           setIsLoggedin(true);
           fetchUserData();
-          navigate("/");
           toast.success("Login successful!", { duration: 3000 });
+
+          const role = data.user?.role || data.role;
+
+          if (role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/");
+          }
         } else {
           toast.error(data.message);
         }

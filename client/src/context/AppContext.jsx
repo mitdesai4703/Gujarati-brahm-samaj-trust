@@ -1,57 +1,91 @@
-import { createContext, useEffect, useState } from "react";
+// AppContext.jsx
+import { createContext, useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
+// Create the context
 export const AppContent = createContext();
 
-export const AppContextProvider = (props) => {
+// Custom hook to use context
+export const useAppContext = () => useContext(AppContent);
 
+export const AppContextProvider = ({ children }) => {
   axios.defaults.withCredentials = true;
 
-
-
+  const navigate = useNavigate();
+  const currency = import.meta.env.VITE_CURRENCY || "₹";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const [isLoggedin, setIsLoggedin] = useState(false);
-  const [userData, setUserData] = useState(null); 
+  const [userData, setUserData] = useState(null);
+  const [searchedCities, setSearchedCities] = useState([]);
+  const [isOwner, setIsOwner] = useState(false);
+  const [showHallReg, setShowHallReg] = useState(false);
 
- 
-  const getAuthState = async () => {
-    try {
-      const { data } = await axios.get(`${backendUrl}/api/auth/is-auth`);
-      if (data.success) {
-        setIsLoggedin(true);
-        setUserData(data.user); 
-      }
-    } catch (error) {
-      toast.error(error.message); 
-    }
-  };
+  // TODO: Replace these with actual logic later if needed
+  const user = userData;
+  const getToken = async () => "";
 
- 
-  const fetchUserData = async () => {
+  const fetchUser = async () => {
     try {
-      const { data } = await axios.get(`${backendUrl}/api/user/data`);
+      const { data } = await axios.get("/api/user", {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
+
       if (data.success) {
-        setUserData(data.userData); 
+        setIsOwner(data.role === "admin");
+        setSearchedCities(data.recentSearchedCities || []);
       } else {
-        toast.error(data.message); 
+        setTimeout(fetchUser, 5000); // retry
       }
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  
+  const getAuthState = async () => {
+    try {
+      const { data } = await axios.get(`${backendUrl}/api/auth/is-auth`);
+      if (data.success) {
+        setIsLoggedin(true);
+        setUserData(data.user);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const fetchUserData = async () => {
+    try {
+      const { data } = await axios.get(`${backendUrl}/api/user/data`);
+      if (data.success) {
+        setUserData(data.userData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     getAuthState();
   }, []);
 
- 
   useEffect(() => {
     if (isLoggedin) {
       fetchUserData();
     }
-  }, [isLoggedin]); 
+  }, [isLoggedin]);
+
+  useEffect(() => {
+    if (user) {
+      fetchUser();
+    }
+  }, [user]);
 
   const value = {
     backendUrl,
@@ -60,11 +94,22 @@ export const AppContextProvider = (props) => {
     userData,
     setUserData,
     fetchUserData,
+    currency,
+    navigate,
+    user,
+    getToken,
+    isOwner,
+    setIsOwner,
+    axios,
+    showHallReg,
+    setShowHallReg,
+    searchedCities,
+    setSearchedCities,
   };
 
   return (
     <AppContent.Provider value={value}>
-      {props.children}
+      {children}
     </AppContent.Provider>
   );
 };

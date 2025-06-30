@@ -4,10 +4,15 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/db.js";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
+import hallRouter from "./routes/hallRoutes.js";
+import connectCloudinary from "./config/cloudinary.js";
+import roomRouter from "./routes/roomRoutes.js";
+import bookingRouter from "./routes/bookingRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
 connectDB();
+connectCloudinary();
 
 const allowedOrigins = ['http://localhost:5173']
 
@@ -17,5 +22,7 @@ app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-
+app.use("/api/halls", hallRouter);
+app.use("/api/rooms", roomRouter);
+app.use("/api/bookings", bookingRouter);
 app.listen(port, () => console.log(`Server started on PORT:${port}`));

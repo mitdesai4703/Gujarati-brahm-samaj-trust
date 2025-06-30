@@ -10,7 +10,7 @@ router.post("/create", userAuth, async (req, res) => {
     const { amount, message, campaign, paymentId } = req.body;
     const userId = req.body.userId; 
 
-   
+    
     const donation = await DonationModel.create({
       amount,
       message,
@@ -19,7 +19,7 @@ router.post("/create", userAuth, async (req, res) => {
       paymentId
     });
 
-   
+  
     await CampaignModel.findByIdAndUpdate(campaign, {
       $inc: { collectedAmount: amount },
     });
@@ -58,7 +58,7 @@ router.get(
 router.get("/get-donations-by-user/:id", userAuth, async (req, res) => {
   try {
     const donations = await DonationModel.find({ user: req.params.id })
-      .populate("campaign")  
+      .populate("campaign") 
       .sort({ createdAt: -1 });  
     return res.status(200).json(donations);
   } catch (error) {

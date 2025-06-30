@@ -11,16 +11,30 @@ import Footer from './components/Footer';
 import HallDetails from './pages/HallDetails';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+import MyBookings from './pages/MyBookings';
+import HotelRegistration from './components/Admin/HotelRegistration';
+import Layout from './pages/Admin/Layout';
+import Dashboard from "./pages/Admin/Dashboard";
+import AddHall from "./pages/Admin/Hall/AddHall";
+import ListHall from "./pages/Admin/Hall/ListHall";
+import { useAppContext } from './context/AppContext';
+
 
 const App = () => {
   const location = useLocation();
-  const hiddenNavbarPaths = ['/login', '/email-verify', '/reset-password'];
-  const hideNavbar = hiddenNavbarPaths.includes(location.pathname);
+  const hiddenNavbarPaths = ['/login', '/email-verify', '/reset-password' , '/admin'];
+  const hideNavbar =
+  hiddenNavbarPaths.includes(location.pathname) ||
+  location.pathname.startsWith('/admin');
+
+  const {showHallReg} = useAppContext();
+
 
   return (
     <div>
       <Toaster position="top-center" /> 
       {!hideNavbar && <Navbar />}
+      { showHallReg && <HotelRegistration/>}
       <div className='min-h-[70vh]'>
         <Routes>
           <Route path='/' element={<Home />} />
@@ -32,6 +46,16 @@ const App = () => {
           <Route path='/hall/:id' element={<HallDetails/>}/>
           <Route path='/aboutus' element={<AboutUs/>}/>
            <Route path='/contactus' element={<ContactUs/>}/>
+            <Route path='/my-bookings' element={<MyBookings/>}/>
+
+            {/* Admin */}
+            <Route path='/admin' element={<Layout/>}>
+             <Route index element={<Dashboard/>}/>
+              <Route path='add-hall'  element={<AddHall/>}/>
+               <Route path='list-hall'  element={<ListHall/>}/>
+
+            </Route>
+
         </Routes>
       </div>
       {!hideNavbar && <Footer/>}
