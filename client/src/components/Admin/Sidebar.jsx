@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaPlusCircle, FaListUl } from 'react-icons/fa';
+import { FaHome, FaPlusCircle, FaListUl, FaBullhorn } from 'react-icons/fa'; 
 
 const Sidebar = () => {
   const sidebarLinks = [
     { name: 'Dashboard', path: '/admin', icon: <FaHome /> },
     { name: 'Add Hall', path: '/admin/add-hall', icon: <FaPlusCircle /> },
     { name: 'List Hall', path: '/admin/list-hall', icon: <FaListUl /> },
+    { name: 'Campaigns', path: '/admin/campaigns', icon: <FaBullhorn /> }, 
   ];
 
   return (

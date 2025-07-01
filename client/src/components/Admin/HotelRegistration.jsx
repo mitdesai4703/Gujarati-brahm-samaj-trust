@@ -3,7 +3,6 @@ import { IoMdClose } from "react-icons/io";
 import { images } from "../../assets/assets";
 import { AppContent, useAppContext } from "../../context/AppContext";
 
-// Sample city list
 const cityList = ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Navsari"];
 
 
@@ -20,18 +19,18 @@ const HotelRegistration = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <form className="flex w-full max-w-4xl bg-white rounded-xl overflow-hidden max-md:mx-2">
-        {/* Image Section */}
+       
         <div
           className="w-1/2 h-[520px] hidden md:block bg-cover bg-center"
           style={{ backgroundImage: `url(${images.regImg})` }}
         ></div>
 
-        {/* Form Section */}
+  
         <div className="relative flex flex-col items-center w-full md:w-1/2 p-8 md:p-10">
           <IoMdClose className="absolute top-4 right-4 h-6 w-6 text-gray-500 cursor-pointer" onClick={()=>setShowHallReg(false)} />
           <p className="text-2xl font-semibold mt-6">Register Your Hall</p>
 
-          {/* Hall Name */}
+     
           <div className="w-full mt-6">
             <label htmlFor="name" className="block text-gray-600 font-medium mb-1">
               Hall Name
@@ -45,7 +44,7 @@ const HotelRegistration = () => {
             />
           </div>
 
-          {/* Phone */}
+         
           <div className="w-full mt-6">
             <label htmlFor="contact" className="block text-gray-600 font-medium mb-1">
               Phone
@@ -59,7 +58,7 @@ const HotelRegistration = () => {
             />
           </div>
 
-          {/* Address */}
+       
           <div className="w-full mt-6">
             <label htmlFor="address" className="block text-gray-600 font-medium mb-1">
               Address
@@ -73,7 +72,7 @@ const HotelRegistration = () => {
             />
           </div>
 
-          {/* Select City Dropdown */}
+         
           <div className="w-full mt-6 max-w-60 mr-auto">
             <label htmlFor="city" className="font-medium text-gray-500">
               City

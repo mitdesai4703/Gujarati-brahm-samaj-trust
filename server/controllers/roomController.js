@@ -10,11 +10,11 @@ export const createRoom = async (req, res) => {
 
     if(!hall) return res.json({success:false,message:"No Hall Found"});
 
-    //upload images to cloudinary
+  
     const uploadImages=req.files.map(async (file)=>{
       const response = await cloudinart.uploader.upload(file.path);
     })
-    //wait for all uploads to compelete
+    
     const images = await Promise.all(uploadImages)
     await roomModel.create({
       hall:hall._id,

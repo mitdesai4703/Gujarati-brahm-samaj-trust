@@ -8,6 +8,11 @@ import hallRouter from "./routes/hallRoutes.js";
 import connectCloudinary from "./config/cloudinary.js";
 import roomRouter from "./routes/roomRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
+import campaignRouter from "./routes/campaignRoutes.js"
+import priestServiceRouter from "./routes/priestServiceRoute.js";
+import paymentRouter from "./routes/paymentRoutes.js"
+import donationsRouter from "./routes/donationRoute.js"
+
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -25,4 +30,10 @@ app.use("/api/user", userRouter);
 app.use("/api/halls", hallRouter);
 app.use("/api/rooms", roomRouter);
 app.use("/api/bookings", bookingRouter);
+app.use("/api/campaigns", campaignRouter);
+app.use("/api/priest", priestServiceRouter);
+app.use("/api/payments", paymentRouter);
+app.use('/api/donations',donationsRouter);
+
+
 app.listen(port, () => console.log(`Server started on PORT:${port}`));

@@ -23,7 +23,7 @@ const AddHall = () => {
 
   return (
     <form>
-      {/* Title */}
+     
       <div className="mb-8 text-left">
         <h1 className="text-3xl md:text-4xl font-bold text-red-700 mb-2">
           Add Hall
@@ -34,7 +34,7 @@ const AddHall = () => {
         </p>
       </div>
 
-      {/* Upload Area For Images */}
+      
       <p className="text-gray-800 mt-10">Images</p>
       <div className="grid grid-cols-2 sm:flex gap-4 my-2 flex-wrap">
         {Object.keys(images).map((key) => (
@@ -79,7 +79,7 @@ const AddHall = () => {
         ))}
       </div>
 
-      {/* Hall Type & Price */}
+   
       <div className="w-full flex max-sm:flex-col sm:gap-4 mt-4">
         <div className="flex-1 max-w-48">
           <p className="text-gray-800 mt-4">Hall Type</p>
@@ -117,7 +117,7 @@ const AddHall = () => {
         </div>
       </div>
 
-      {/* Amenities */}
+    
       <p className="text-gray-800 mt-4">Amenities</p>
       <div className="flex flex-col flex-wrap mt-1 text-gray-400 max-w-sm">
         {Object.keys(inputs.amenities).map((amenity, index) => (
@@ -143,7 +143,7 @@ const AddHall = () => {
         ))}
       </div>
 
-      {/* Submit Button */}
+ 
       <button
         type="submit"
         className="bg-red-700 hover:bg-red-600 text-white px-8 py-2 rounded mt-8 cursor-pointer"

@@ -28,18 +28,18 @@ const MyBookings = () => {
     key={room._id}
     className="grid grid-cols-1 md:grid-cols-[3fr_2fr_1fr] w-full border-b border-gray-300 py-6 first:border-t"
   >
-    {/* ---- Room Details ---- */}
+  
     <div className="flex flex-col md:flex-row gap-4 items-start">
-  {/* Room Image */}
+
   <img
     src={room.images[0]}
     alt={`${room.name} image`}
     className="w-44 h-28 rounded shadow object-cover"
   />
 
-  {/* Details */}
+
   <div className="flex flex-col gap-2 justify-between">
-    {/* Room Name and Type */}
+
     <div className="flex items-start justify-between w-full">
       <p className="font-playfair text-xl font-semibold text-black">
         {room.name}
@@ -49,7 +49,7 @@ const MyBookings = () => {
       </p>
     </div>
 
-    {/* Address/Host */}
+   
     <div className="flex items-center gap-2 text-sm text-gray-500">
       <img
         src={images.location}
@@ -59,12 +59,12 @@ const MyBookings = () => {
       <span>{room.address || `Hosted by: ${room.hostedBy}`}</span>
     </div>
 
-    {/* Guest count */}
+  
     <div className="flex items-center gap-2 text-sm text-gray-500">
       <span>👥 Guests: {room.capacity}</span>
     </div>
 
-    {/* Total Price */}
+   
     <div className="text-sm font-medium text-black">
       Total: ₹{room.price}
     </div>
@@ -72,9 +72,9 @@ const MyBookings = () => {
 </div>
 
 
-    {/* ---- Date & Timings Section (Placeholder) ---- */}
+    
   <div className="mt-4 md:mt-0 flex flex-row md:items-center md:gap-12  gap-8">
-  {/* Check-In */}
+
   <div>
     <p className="font-medium text-sm">Check-In:</p>
     <p className="text-gray-500 text-sm">
@@ -82,7 +82,7 @@ const MyBookings = () => {
     </p>
   </div>
 
-  {/* Check-Out */}
+
   <div>
     <p className="font-medium text-sm">Check-Out:</p>
     <p className="text-gray-500 text-sm">
@@ -92,7 +92,7 @@ const MyBookings = () => {
 </div>
 
 
-    {/* ---- Payment Info (Placeholder) ---- */}
+    
     <div className="flex flex-col items-start justify-center pt-3">
   <div className="flex items-center gap-2">
     <div

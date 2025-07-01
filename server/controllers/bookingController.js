@@ -3,7 +3,7 @@ import roomModel from "../models/Room.js";
 import hallModel from "../models/Hall.js";
 
 
-//Function to check availablity of room
+
 const checkAvailability = async ({checkInDate,checkOutDate,room})=>{
   try{
     const bookings = await bookingModel.find({
@@ -78,7 +78,7 @@ export const getUserBookings = async(req,res)=>{
 
 export const getHallBookings = async (req, res) => {
   try {
-    const hall = await hallModel.findOne({ owner: req.user._id }); // fixed here
+    const hall = await hallModel.findOne({ owner: req.user._id }); 
     if (!hall) {
       return res.json({ success: false, message: "No Hall Found" });
     }

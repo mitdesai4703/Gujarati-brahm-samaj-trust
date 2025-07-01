@@ -19,7 +19,7 @@ const Navbar = () => {
     { name: "પુજારી સેવાઓ", path: "/priest-services" },
     { name: "મહિલા મહામંડળ", path: "/ladies-group" },
     { name: "રહેઠાણ", path: "/accommodation" },
-    { name: "દાન", path: "/donate" },
+    { name: "દાન", path: "/campaignpage" },
     { name: "શિક્ષણ", path: "/education" },
     { name: "સમાચાર અને પ્રવૃત્તિઓ", path: "/news" },
     { name: "સંપર્ક", path: "/contactus" },
@@ -107,6 +107,12 @@ const Navbar = () => {
                       className="py-1 px-2 hover:bg-yellow-200 cursor-pointer pr-10 whitespace-nowrap"
                     >
                       My Bookings
+                    </li>
+                    <li
+                      onClick={() => navigate("/donations")}
+                      className="py-1 px-2 hover:bg-yellow-200 cursor-pointer pr-10 whitespace-nowrap"
+                    >
+                      My Donations
                     </li>
                     <li
                       onClick={handleLogout}
