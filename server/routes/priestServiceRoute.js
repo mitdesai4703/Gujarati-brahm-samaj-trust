@@ -23,9 +23,9 @@ router.post("/request", async (req, res) => {
     await transporter.sendMail({
       from: `"Gujarati Samaj Trust" <${process.env.SENDER_EMAIL}>`,
       to: process.env.SENDER_EMAIL, 
-      subject: `📿 New Priest Service Request from ${name}`,
+      subject: ` New Priest Service Request from ${name}`,
       html: `
-        <h2>🕉️ Priest Service Request</h2>
+        <h2> Priest Service Request</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone}</p>

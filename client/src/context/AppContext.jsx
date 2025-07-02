@@ -1,13 +1,13 @@
-// AppContext.jsx
+
 import { createContext, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-// Create the context
+
 export const AppContent = createContext();
 
-// Custom hook to use context
+
 export const useAppContext = () => useContext(AppContent);
 
 export const AppContextProvider = ({ children }) => {
@@ -23,7 +23,7 @@ export const AppContextProvider = ({ children }) => {
   const [isOwner, setIsOwner] = useState(false);
   const [showHallReg, setShowHallReg] = useState(false);
 
-  // TODO: Replace these with actual logic later if needed
+  
   const user = userData;
   const getToken = async () => "";
 
@@ -39,7 +39,7 @@ export const AppContextProvider = ({ children }) => {
         setIsOwner(data.role === "admin");
         setSearchedCities(data.recentSearchedCities || []);
       } else {
-        setTimeout(fetchUser, 5000); // retry
+        setTimeout(fetchUser, 5000); 
       }
     } catch (error) {
       toast.error(error.message);

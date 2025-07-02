@@ -1,5 +1,5 @@
 import React from 'react'
-import CampaignSection from '../components/Donation/CampaignSection'
+import CampaignSection from '../../components/Donation/CampaignSection'
 
 
 const CampaignPageUser = () => {

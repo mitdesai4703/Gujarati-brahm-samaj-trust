@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import DonationCard from "../components/Donation/DonationCard";
+import DonationCard from "../../components/Donation/DonationCard";
 
 const CampaignInfo = () => {
   const navigate = useNavigate();

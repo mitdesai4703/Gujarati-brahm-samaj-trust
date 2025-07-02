@@ -14,7 +14,7 @@ const DonationPage = () => {
     setLoading(true);
 
     const response = await axios.get(
-      "http://localhost:4000/api/donations/get-my-donations",
+      `${import.meta.env.VITE_BACKEND_URL}/api/donations/get-my-donations`,
       { withCredentials: true }
     );
 

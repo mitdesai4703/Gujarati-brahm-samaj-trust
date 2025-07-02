@@ -8,13 +8,13 @@ const router = express.Router();
 router.post("/create", userAuth, async (req, res) => {
   try {
     const { amount, message, campaign, paymentId } = req.body;
-    const userId = req.user.id; // ✅ Get the user ID from middleware
+    const userId = req.user.id; 
 
     const donation = await DonationModel.create({
       amount,
       message,
       campaign,
-      user: userId, // ✅ Use the decoded user ID here
+      user: userId, 
       paymentId,
     });
 

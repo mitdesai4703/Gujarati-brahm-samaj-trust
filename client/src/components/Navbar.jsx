@@ -15,12 +15,10 @@ const Navbar = () => {
   const navLinks = [
     { name: "HOME", path: "/" },
     { name: "અમારા વિશે", path: "/aboutus" },
-    { name: "સમુદાય હોલ", path: "/community-hall" },
+    { name: "સમુદાય હોલ", path: "/halls" },
     { name: "પુજારી સેવાઓ", path: "/priest-services" },
     { name: "મહિલા મહામંડળ", path: "/ladies-group" },
-    { name: "રહેઠાણ", path: "/accommodation" },
     { name: "દાન", path: "/campaignpage" },
-    { name: "શિક્ષણ", path: "/education" },
     { name: "સમાચાર અને પ્રવૃત્તિઓ", path: "/news" },
     { name: "સંપર્ક", path: "/contactus" },
   ];

@@ -4,12 +4,7 @@ const bookingSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
-      required: true,
-    },
-    room: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Room",
+      ref: "User",
       required: true,
     },
     hall: {
@@ -17,40 +12,51 @@ const bookingSchema = new mongoose.Schema(
       ref: "Hall",
       required: true,
     },
-    checkInDate: {
-      type: Date,
-      required: true,
-    },
-    checkOutDate: {
-      type: Date,
-      required: true,
-    },
-    totalPrice: {
-      type: Number,
+    eventType: {
+      type: String,
+      enum: ["Wedding", "Party", "Seminar", "Other"],
       required: true,
     },
     guests: {
       type: Number,
       required: true,
     },
-    status: {
-      type: String,
-      enum: ["Pending", "Confirmed", "Cancelled", "Completed"],
-      default: "Pending",
+    date: {
+      type: Date,
+      required: true,
     },
-    paymentMethod: {
+    duration: {
+      type: String, 
+      required: true,
+    },
+    specialRequirements: {
+      type: String,
+    },
+    message: {
+      type: String,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    paymentIntentId: {
       type: String,
       required: true,
-      default:"Pay At Hall",
     },
-    isPaid: {
-      type: Boolean,
-      default: false,
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "paid", "failed"],
+      default: "pending",
+    },
+    bookingStatus: {
+      type: String,
+      enum: ["pending", "confirmed", "cancelled"],
+      default: "pending",
     },
   },
   { timestamps: true }
 );
 
-const bookingModel = mongoose.model("Booking", bookingSchema);
+const Booking = mongoose.model("Booking", bookingSchema);
 
-export default bookingModel;
+export default Booking;

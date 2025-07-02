@@ -1,157 +1,115 @@
-import React, { useState } from "react";
-import { FaUpload, FaTimes } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { FaTrashAlt, FaEdit } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
-const AddHall = () => {
-  const [images, setImages] = useState({
-    1: null,
-    2: null,
-    3: null,
-    4: null,
-  });
+const AdminHallPage = () => {
+  const navigate = useNavigate();
+  const [halls, setHalls] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const [inputs, setInputs] = useState({
-    roomType: "",
-    pricePerDay: 0,
-    amenities: {
-      "Free WiFi": false,
-      "Free Brekfast": false,
-      "Room Service": false,
-      "Mountain View": false,
-      "Pool Access": false,
-    },
-  });
+  const getData = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/halls/get-all`);
+      const data = Array.isArray(res.data) ? res.data : res.data.halls;
+      setHalls(data || []);
+    } catch (err) {
+      toast.error("Failed to fetch halls: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this hall?")) return;
+    const toastId = toast.loading("Deleting hall...");
+    try {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/halls/delete/${id}`);
+      toast.success("Hall deleted successfully", { id: toastId });
+      getData();
+    } catch (err) {
+      toast.error("Failed to delete hall: " + err.message, { id: toastId });
+    }
+  };
 
   return (
-    <form>
-     
-      <div className="mb-8 text-left">
-        <h1 className="text-3xl md:text-4xl font-bold text-red-700 mb-2">
-          Add Hall
-        </h1>
-        <p className="text-gray-600 text-sm md:text-base max-w-2xl">
-          Fill in the details carefully and provide accurate hall details,
-          pricing, and amenities to enhance the user booking experience.
-        </p>
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">Hall Management</h1>
+        <button
+          onClick={() => navigate("/admin/halls/create")}
+          className="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700 transition"
+        >
+          + Add Hall
+        </button>
       </div>
 
-      
-      <p className="text-gray-800 mt-10">Images</p>
-      <div className="grid grid-cols-2 sm:flex gap-4 my-2 flex-wrap">
-        {Object.keys(images).map((key) => (
-          <div
-            key={key}
-            className="relative h-32 w-32 border border-dashed border-gray-400 rounded flex items-center justify-center hover:bg-gray-100"
-          >
-            {images[key] ? (
-              <>
-                <img
-                  src={URL.createObjectURL(images[key])}
-                  alt={`Preview ${key}`}
-                  className="h-full w-full object-cover rounded"
-                />
-                <button
-                  type="button"
-                  onClick={() => setImages({ ...images, [key]: null })}
-                  className="absolute top-1 right-1 bg-white p-1 rounded-full shadow text-red-600 hover:bg-red-100"
-                  title="Remove image"
-                >
-                  <FaTimes className="text-sm" />
-                </button>
-              </>
-            ) : (
-              <label
-                htmlFor={`roomImage${key}`}
-                className="w-full h-full flex items-center justify-center cursor-pointer"
-              >
-                <FaUpload className="text-gray-500 text-2xl" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  id={`roomImage${key}`}
-                  hidden
-                  onChange={(e) =>
-                    setImages({ ...images, [key]: e.target.files[0] })
-                  }
-                />
-              </label>
-            )}
-          </div>
-        ))}
-      </div>
-
-   
-      <div className="w-full flex max-sm:flex-col sm:gap-4 mt-4">
-        <div className="flex-1 max-w-48">
-          <p className="text-gray-800 mt-4">Hall Type</p>
-          <select
-            value={inputs.hallType}
-            onChange={(e) =>
-              setInputs({ ...inputs, hallType: e.target.value })
-            }
-            className="border opacity-70 border-gray-300 mt-1 rounded p-2 w-full"
-          >
-            <option value="">Select Hall Type</option>
-            <option value="Banquet Hall">Banquet Hall</option>
-            <option value="Conference Hall">Conference Hall</option>
-            <option value="Marriage Hall">Marriage Hall</option>
-            <option value="Party Hall">Party Hall</option>
-          </select>
+      {loading ? (
+        <p className="text-gray-500">Loading halls...</p>
+      ) : halls.length === 0 ? (
+        <p className="text-gray-500">No halls available yet.</p>
+      ) : (
+        <div className="overflow-x-auto rounded border">
+          <table className="min-w-full text-sm text-left text-gray-700">
+            <thead className="bg-gray-100 text-gray-900 font-semibold">
+              <tr>
+                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">City</th>
+                <th className="px-4 py-3">Address</th>
+                <th className="px-4 py-3">Price</th>
+                <th className="px-4 py-3">Capacity</th>
+                <th className="px-4 py-3">Available</th>
+                <th className="px-4 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {halls.map((hall) => (
+                <tr key={hall._id} className="border-t hover:bg-gray-50">
+                  <td className="px-4 py-2 font-medium">{hall.name}</td>
+                  <td className="px-4 py-2">{hall.city}</td>
+                  <td className="px-4 py-2">{hall.address}</td>
+                  <td className="px-4 py-2 text-blue-600">
+                    {import.meta.env.VITE_CURRENCY}
+                    {hall.price}
+                  </td>
+                  <td className="px-4 py-2">{hall.capacity}</td>
+                  <td className="px-4 py-2">
+                    <span
+                      className={`font-medium ${hall.isAvailable ? "text-green-600" : "text-red-600"}`}
+                    >
+                      {hall.isAvailable ? "Yes" : "No"}
+                    </span>
+                  </td>
+                  <td className="px-4 py-2 flex gap-2 items-center">
+                    <button
+                      onClick={() => navigate(`/admin/halls/edit/${hall._id}`)}
+                      className="text-blue-600 hover:text-blue-800"
+                      title="Edit"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(hall._id)}
+                      className="text-red-600 hover:text-red-800"
+                      title="Delete"
+                    >
+                      <FaTrashAlt />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-
-        <div>
-          <p className="mt-4 text-gray-800">
-            Price <span className="text-xs">/day</span>
-          </p>
-          <input
-            type="number"
-            placeholder="0"
-            className="border border-gray-300 mt-1 rounded p-2 w-24"
-            value={inputs.pricePerDay}
-            onChange={(e) =>
-              setInputs({
-                ...inputs,
-                pricePerDay: parseInt(e.target.value) || 0,
-              })
-            }
-          />
-        </div>
-      </div>
-
-    
-      <p className="text-gray-800 mt-4">Amenities</p>
-      <div className="flex flex-col flex-wrap mt-1 text-gray-400 max-w-sm">
-        {Object.keys(inputs.amenities).map((amenity, index) => (
-          <div key={index}>
-            <input
-              type="checkbox"
-              id={`amenities${index + 1}`}
-              checked={inputs.amenities[amenity]}
-              onChange={() =>
-                setInputs({
-                  ...inputs,
-                  amenities: {
-                    ...inputs.amenities,
-                    [amenity]: !inputs.amenities[amenity],
-                  },
-                })
-              }
-            />
-            <label htmlFor={`amenities${index + 1}`} className="ml-2">
-              {amenity}
-            </label>
-          </div>
-        ))}
-      </div>
-
- 
-      <button
-        type="submit"
-        className="bg-red-700 hover:bg-red-600 text-white px-8 py-2 rounded mt-8 cursor-pointer"
-      >
-        Add Hall
-      </button>
-    </form>
+      )}
+    </div>
   );
 };
 
-export default AddHall;
+export default AdminHallPage;

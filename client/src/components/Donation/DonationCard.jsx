@@ -21,7 +21,7 @@ const DonationCard = ({ campaignData, reloadCampaignData }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:4000/api/payments/create-payment-intent",
+        `${import.meta.env.VITE_BACKEND_URL}/api/payments/create-payment-intent`,
         { amount }
       );
       setClientSecretToken(response.data.clientSecret);
