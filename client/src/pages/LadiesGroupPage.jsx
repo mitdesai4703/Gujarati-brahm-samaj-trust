@@ -17,19 +17,21 @@ const LadiesGroupPage = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
-  const { name, phone, email, area, message } = form;
 
-  const textMessage = `*New Ladies Group Join Request*\n\n *Name:* ${name}\n *Phone:* ${phone}\n *Email:* ${email}\n *Area:* ${area}\n *Message:* ${message || "No message"}`;
+  try {
+    const res = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/api/events/ladies/join`,
+      form
+    );
 
-  const whatsappNumber = "919510544723"; 
-  const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(textMessage)}`;
-
-  window.open(whatsappURL, "_blank");
-
-  toast.success("Redirecting to WhatsApp...");
-  setForm({ name: "", phone: "", email: "", area: "", message: "" });
+    toast.success("Request sent successfully via email!");
+    setForm({ name: "", phone: "", email: "", area: "", message: "" });
+  } catch (error) {
+    console.error("Failed to send email:", error);
+    toast.error("Failed to send request. Please try again.");
+  }
 };
 
 

@@ -22,7 +22,7 @@ router.post("/request", async (req, res) => {
   try {
     await transporter.sendMail({
       from: `"Gujarati Samaj Trust" <${process.env.SENDER_EMAIL}>`,
-      to: process.env.SENDER_EMAIL, 
+      to: 'gujaratibrahmsamajbangalore@gmail.com', 
       subject: ` New Priest Service Request from ${name}`,
       html: `
         <h2> Priest Service Request</h2>
@@ -37,6 +37,7 @@ router.post("/request", async (req, res) => {
         <p><strong>Message:</strong> ${message || "N/A"}</p>
       `,
     });
+   
 
     res.status(200).json({ success: true, message: "Request sent successfully" });
   } catch (error) {

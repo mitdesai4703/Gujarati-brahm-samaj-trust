@@ -14,6 +14,7 @@ import paymentRouter from "./routes/paymentRoutes.js"
 import donationsRouter from "./routes/donationRoute.js"
 import ladiesEventRouter from "./routes/ladiesEventRoutes.js"
 import newsRouter from "./routes/newsRoute.js"
+import contactRouter from "./routes/contactRoutes.js"
 
 
 
@@ -38,6 +39,7 @@ app.use("/api/payments", paymentRouter);
 app.use('/api/donations',donationsRouter);
 app.use('/api/events/ladies',ladiesEventRouter);
 app.use('/api/news',newsRouter);
+app.use("/api/contact", contactRouter);
 
 app.use("/uploads", express.static("uploads"));
 
